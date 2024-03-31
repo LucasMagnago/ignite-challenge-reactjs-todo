@@ -1,0 +1,15 @@
+.emptyListMessage {
+	height: 15.25rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	border-top: 1px solid var(--gray-400);
+
+	color: var(--gray-300);
+}
+
+.hide {
+	display: none;
+}

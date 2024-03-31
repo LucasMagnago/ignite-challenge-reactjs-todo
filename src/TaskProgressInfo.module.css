@@ -1,0 +1,32 @@
+.taskProgressInfo {
+	height: 1.1875rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1.5rem;
+}
+
+.taskProgressInfo p {
+	color: var(--blue);
+	font-size: 0.875rem;
+	font-weight: bold;
+	line-height: 1.4;
+}
+
+.taskProgressInfo p:last-of-type {
+	color: var(--purple);
+}
+
+.taskProgressInfo span {
+	width: 1.5625rem;
+	display: inline-block;
+	border-radius: 40%;
+
+	text-align: center;
+	font-size: 0.75rem;
+	font-weight: bold;
+	line-height: 1.4;
+	color: var(--white);
+
+	background-color: var(--gray-400);
+}
