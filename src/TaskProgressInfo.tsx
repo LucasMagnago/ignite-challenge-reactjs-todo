@@ -1,13 +1,23 @@
 import styles from "./TaskProgressInfo.module.css";
 
-export function TaskProgressInfo() {
+export interface TaskProgressInfoProps {
+	tasksCreated: number;
+	tasksDone: number;
+}
+export function TaskProgressInfo({
+	tasksCreated,
+	tasksDone,
+}: TaskProgressInfoProps) {
 	return (
 		<div className={styles.taskProgressInfo}>
 			<p>
-				Tarefas Criadas <span>0</span>
+				Tarefas Criadas <span>{tasksCreated}</span>
 			</p>
 			<p>
-				Concluídas <span>0</span>
+				Concluídas{" "}
+				<span>
+					{tasksDone} de {tasksCreated}
+				</span>
 			</p>
 		</div>
 	);

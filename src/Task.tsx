@@ -1,16 +1,33 @@
 import { SpeakerSimpleHigh, Trash } from "phosphor-react";
 import styles from "./Task.module.css";
+import { ChangeEvent, useState } from "react";
 
 export interface TaskProps {
-	id: number;
-	content: string;
-	done: boolean;
-	onDeleteTask: (number: number) => void;
+	task: ITask;
+	onCompleteTask: (id: string, completed: boolean) => void;
+	onDeleteTask: (id: string) => void;
 }
 
-export function Task({ id, content, done, onDeleteTask }: TaskProps) {
-	function handleDeleteComment() {
-		onDeleteTask(id);
+export interface ITask {
+	id: string;
+	content: string;
+	done: boolean;
+}
+
+export function Task({ task, onCompleteTask, onDeleteTask }: TaskProps) {
+	const [completed, setCompleted] = useState(task.done);
+
+	function handleCompletedChange() {
+		setCompleted(!completed);
+		handleCompleteTask();
+	}
+
+	function handleCompleteTask() {
+		onCompleteTask(task.id, completed);
+	}
+
+	function handleDeleteTask() {
+		onDeleteTask(task.id);
 	}
 
 	return (
@@ -18,12 +35,19 @@ export function Task({ id, content, done, onDeleteTask }: TaskProps) {
 			<div className={styles.task}>
 				<div className={styles.content}>
 					<div className={styles.checkboxWrapper}>
-						<input type="checkbox" checked={done} />
-						<label htmlFor="customCheckbox"></label>
+						<input
+							id={task.id}
+							type="checkbox"
+							checked={task.done}
+							onChange={handleCompletedChange}
+						/>
+						<label htmlFor={task.id} />
 					</div>
-					<p>{content}</p>
+					<p className={task.done ? styles.contentWhenTaskCompleted : ""}>
+						{task.content}
+					</p>
 				</div>
-				<button onClick={handleDeleteComment}>
+				<button onClick={handleDeleteTask}>
 					<Trash />
 				</button>
 			</div>
