@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { EmptyListMessage } from "./EmptyListMessage";
 import { TaskProgressInfo } from "./TaskProgressInfo";
-import { Task, TaskProps } from "./Task.tsx";
+import { Task, TaskProps, ITask } from "./Task.tsx";
 import { NewTaskBar } from "./NewTaskBar.tsx";
 
 import { v4 as uuidv4 } from "uuid";
@@ -19,13 +19,19 @@ export function Tasks() {
 	}
 
 	function completeTask(taskId: string, status: boolean) {
-		tasks.map((task) => {
-			if (task.id == taskId) {
-				task.done = status;
+		let taskBeforeUpdate: ITask;
+
+		const tasksWithoutUpdatedOne = tasks.filter((task) => {
+			if (task.id != taskId) {
+				return task;
+			} else {
+				taskBeforeUpdate = task;
 			}
 		});
 
-		setTasks(tasks);
+		taskBeforeUpdate!.done = status;
+
+		setTasks([...tasksWithoutUpdatedOne, taskBeforeUpdate!]);
 	}
 
 	function deleteTask(taskId: string) {
@@ -46,16 +52,18 @@ export function Tasks() {
 				/>
 				<EmptyListMessage show={tasks.length == 0} />
 				<div className={styles.taskList}>
-					{tasks.map((task) => {
-						return (
-							<Task
-								key={task.id}
-								task={task}
-								onCompleteTask={completeTask}
-								onDeleteTask={deleteTask}
-							/>
-						);
-					})}
+					{tasks
+						.sort((taskA, taskB) => (taskA.id < taskB.id ? 1 : -1))
+						.map((task) => {
+							return (
+								<Task
+									key={task.id}
+									task={task}
+									onCompleteTask={completeTask}
+									onDeleteTask={deleteTask}
+								/>
+							);
+						})}
 				</div>
 			</div>
 		</div>
