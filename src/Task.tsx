@@ -47,9 +47,11 @@ export function Task({ task, onCompleteTask, onDeleteTask }: TaskProps) {
 						{task.content}
 					</p>
 				</div>
-				<button onClick={handleDeleteTask}>
-					<Trash />
-				</button>
+				<div className={styles.buttonWrapper}>
+					<button onClick={handleDeleteTask}>
+						<Trash />
+					</button>
+				</div>
 			</div>
 		</>
 	);
